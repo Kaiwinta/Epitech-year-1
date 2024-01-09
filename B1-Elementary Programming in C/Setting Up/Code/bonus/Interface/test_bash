@@ -1,0 +1,122 @@
+#!/usr/bin/python3
+##
+## EPITECH PROJECT, 2023
+## B-CPE-110-STG-1-1-settingup-titouan.pradoura
+## File description:
+## test_bash.py
+##
+
+import subprocess, sys
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+
+# import winsound
+
+"""
+    Goal :
+        Have a functionnal typing practice application
+
+    Images Sources:
+        keyboard icon : Free Keyboard Classic Icon by Parul Gupta
+"""
+
+def main():
+    
+    global palette
+    palette = ["#12100E","#30321C","#4A4B2F","#F4F1DE"]
+
+    window = tk.Tk()
+    window.geometry("800x450+{}+{}".format(int(window.winfo_screenwidth()/2 - 400), int(window.winfo_screenheight()/2 - 225)))
+    window.title('Setting up')
+    # window.iconbitmap("Images/keyboard.ico")
+    window.resizable(False,False)
+    window.bind('<Escape>',lambda e: window.destroy())
+    window.configure(bg=palette[2])
+
+    page1(window)
+    window.mainloop()
+
+def resize_image(image_path, new_width, new_height):
+    original_image = Image.open(image_path)
+    resized_image = original_image.resize((new_width, new_height), Image.ANTIALIAS)
+    return ImageTk.PhotoImage(resized_image)
+
+def page1(frame):
+    global palette
+    # imagebutton=tk.PhotoImage(file='Images/button2.png', master=frame)
+    imagedino = resize_image("bonus/Images/cat.png", 100, 100)
+    # imagepalmier =tk.PhotoImage(file = 'Images/fresepalmier.png')
+    
+    # imagesouligne = tk.PhotoImage(file= 'Images/underline4.png')
+
+    frameTitre = tk.Frame(frame,bg = palette[0])
+    frameTitre.place(rely=0.08, relx=0.1, relheight= 0.1 , relwidth=0.8)
+    
+    labelTitre = tk.Label(frameTitre, fg = palette[3], text="̠S̠̠e̠̠t̠̠t̠̠i̠̠n̠̠g̠ ̠u̠̠p̠",font=("actual",14), bg = palette[0])
+    labelTitre.place(rely=0.5,relx=0.5, anchor= "center")
+    
+    frameBas = tk.Frame(frame , bg=palette[1])
+    frameBas.place(rely=0.2,relx=0.1,relheight=0.72,relwidth=0.8)
+
+    # labelImageUnterline = tk.Label(frameTitre,image=imagesouligne,bg = palette[2])
+    # labelImageUnterline.place(rely = 0.7 , relx=0.387)
+
+    def gotopage2():
+        delete(frameBas)
+
+    labelImagedino = tk.Label(frameBas,image=imagedino, bg=palette[1])
+    labelImagedino.place(relx=-0.05, rely=0.33)
+
+    # labelImagepalmier = tk.Label(frameBas,image=imagepalmier, bg=palette[0])
+    # labelImagepalmier.place(relx=0.35, rely=0.65)
+
+    textebienvenu = ""
+
+    labelDesciption = tk.Label(frameBas,fg = palette[3], bg = palette[1],text=textebienvenu ,font =("actual",10))
+    labelDesciption.place(relheight=0.4,relwidth=0.40,relx=0.3,rely=0.1)
+
+    buttonPage2 = tk.Button(frameBas, command=gotopage2, bg = palette[0])
+    buttonPage2.place(rely=0.6,relx=0.4)
+
+    frame.mainloop()
+
+    def helpuser():
+        global palette
+        helppage = tk.Toplevel()
+        helppage.geometry("400x225+{}+{}".format(int(helppage.winfo_screenwidth()/2 - 200), int(helppage.winfo_screenheight()/2 - 112.5)))
+        helppage.title('Help Menu')
+        helppage.iconbitmap('Images/keyboard.ico')
+        helppage.resizable(False,False)
+        helppage.bind('<Escape>',lambda e: helppage.destroy())
+        helppage.configure(bg=palette[4])
+
+        mainFrame = tk.Frame(helppage , bg = palette[1])
+        mainFrame.place(relheight=0.8 , relwidth=0.9 , relx=0.05 , rely=0.1)
+
+
+        helpIntro ="Welcome to the help zone where you'll find all the\n explanation needed to use my app perfektly"
+        helpText1 = "Before starting you muss enter all the parameter\n The letter are all The letter that you want to test \nLike 'THUQIE', type 'All' to be tested on all"
+        helpText2 = "There's a number showing next to the place where you type,\nthis one count the error that you need\n to delete before continue typing"
+
+
+        helpIntroLabel = tk.Label(mainFrame , bg = palette[1], text= helpIntro)
+        helpIntroLabel.place(relx= 0 , relwidth=1 , rely=0 , relheight=0.35)
+
+        helpLabel1 = tk.Label(mainFrame , bg = palette[1], text= helpText1)
+        helpLabel1.place(relx= 0 , relwidth=1 , rely=0.3 , relheight=0.35)
+
+        helpLabel2 = tk.Label(mainFrame , bg = palette[1], text= helpText2)
+        helpLabel2.place(relx= 0 , relwidth=1 , rely=0.6 , relheight=0.35)
+
+
+        helppage.mainloop()
+
+def delete(frame):
+    for widget in frame.winfo_children():
+        widget.destroy() 
+
+if __name__ == "__main__":
+    main()
+
+# subprocess.run("touch test", shell = True, executable="/bin/bash")
