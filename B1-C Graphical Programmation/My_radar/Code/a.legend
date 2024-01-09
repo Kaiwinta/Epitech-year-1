@@ -1,0 +1,56 @@
+Input Files extension muss be ".radar"
+Input Files are composed by two paragraphs:
+
+The first one is for Aircrafts:
+    Each line represent one with the following parameters
+        • Two integers corresponding to the departure x- and y-coordinates,
+        • Two integers corresponding to the arrival x- and y-coordinates,
+        • One integer corresponding to the aircraft’s speed (in pixels per second)
+        • One integer corresponding to the delay (in seconds) before the aircraft takes off.
+
+Second one is for Control Tower
+    Each line represent one with the following parameters
+        • Two integers corresponding to the control tower x- and y-coordinates,
+        • One integer corresponding to the diameter of the tower’s control area (corresponding to the percentage
+        of the greatest side of the window in pixel).
+    The game can work without this Paragraph, but there will be no tower.
+
+All the x-coordinates need to be between 0 and 1920 included
+All the y-coordinates need to be between 0 and 1080 included
+The aircraft speed need to be between 50 and 160 included
+The tower diameter need to be between 3 and 35 included
+
+Example:    All the element that start with a '#' are just here for the readability and wont be in the file
+
+#Aircrafts Paragraph
+376 347 1714 250 47 16          #One Aircraft
+1755 407 32 259 48 17
+955 385 100 182 17 22
+1040 266 1889 768 11 22
+1539 955 381 928 11 2
+
+#Towers Paragraph
+1367 330 33                     #One Tower
+605 920 2
+1191 842 52
+125 431 30
+315 416 57
+1862 818 22
+\0
+#End Of the file
+
+REMINDER of how to read a line:
+
+Lets take the first line of the Aircraft Paragraph:
+376 347 1714 250 47 16
+
+The first two element are departure x and y coordinates: 376 347
+The 2 that come after are landing w and y coordinates: 1714 250
+After that, the next number is the speed in pixel/second: 47
+And the last value is the delay before taking of in second: 16
+
+Lets take the first line of the Tower Paragraph:
+1367 330 33
+
+The first two values are the x an y coordinates of the tower: 1367 330
+The last one is the diameter of the tower control area in percentage of 1920: 33

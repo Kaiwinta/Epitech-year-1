@@ -1,0 +1,39 @@
+Utilisation : ./my_hunter [OPTION]
+Start a duck hunt's game
+
+OPTION:
+    -e              Start a game with easy difficulty.
+    -n              Start a game with normal difficulty.
+    -s              Start a game with hard difficulty.
+    -x              Start a game with extreme difficulty.
+
+    No_option       Open the game and the difficulty selector.
+
+    When using a flag, no menu will be displayed.
+    And after the boss dead, the game will end.
+
+GAME:
+    The objective is to kill 2 Wave of ghost and the boss.
+    The objective is the same in each difficulty.
+    A total accuracy below 50% will lead you to a lose even if you end the game. 
+    Only the mouse click is used to play.
+    The keyboard is used to start a wave, any key can be pressed.
+
+DIFFICULTY:
+    Easy:           Ghost are slower and bigger before dying.
+    Normal:         When attacked, Ghost run in the opposite direction.
+    Hard:           When attacked, Ghost tun in a random direction.
+    Extreme:        Ghosted move more randomly and are faster.
+
+    Boss:           The boss works like Extreme Ghost, he move in random direction.
+                    He's able to heal himself whenever he touch a border of the map
+
+
+TIPS:
+    To defeat the boss, wait that he's in the middle of your screen before attacking.
+    Otherwise he could ran away and heal a few time before showing back.
+    Also dont spam, the aim is important to win.
+
+NOTES:
+    Ghost can stay in the border, just be patient.
+    Thanks, have fun.

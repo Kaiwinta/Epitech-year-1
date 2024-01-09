@@ -1,0 +1,16 @@
+Air traffic simulation panel
+
+USAGE
+    ./my_radar [OPTIONS] path_to_script
+    path_to_script      The path to the script file.
+                        The script file need to be a ".radar"
+
+OPTIONS
+    -h      print the usage and quit.
+
+USER INTERACTIONS
+    ‘L’             key enable/disable hitboxes and areas visibility.
+    ‘S’             key enable/disable sprites visibility.
+    'Space'         Only works in the menu or at the end, is used to start or end the simulation.
+    'Up arrow'      To speed up the simulation -> potential fps drop
+    'Down arrow'    To slow down the simulation
