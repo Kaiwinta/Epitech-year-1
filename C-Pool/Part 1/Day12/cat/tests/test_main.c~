@@ -1,0 +1,17 @@
+/*
+** EPITECH PROJECT, 2023
+** test_main.c
+** File description:
+** test the main function
+*/
+
+#include <criterion/criterion.h>
+#include <unistd.h>
+
+int my_show_files(char *filename);
+
+Test(my_show_files, no_such_files)
+{
+    int result =my_show_files("catv1");
+    cr_assert_eq(result, 84);
+}
