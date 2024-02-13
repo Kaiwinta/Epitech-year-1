@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2023
+## bs_archi
+## File description:
+## Untitled-1
+##
+
+from math import *
+import sys
+
+class matrice:
+    def __init__(self, word):
+        self.mat = []
+        self.size = ceil(sqrt(len(word)))
+        for i in range(self.size):
+            self.mat.append([])
+            for y in range(self.size):
+                self.mat[i].append(0)
+        for i in range(len(word)):
+            self.mat[i // self.size][i % self.size] = ord(word[i]);
+
+    def __str__(self):
+        string = ""
+        for i in range(len(self.mat)):
+            for y in range(len(self.mat[i])):
+                if y + 1 < len(self.mat[i]):
+                    string += str(self.mat[i][y]) + "\t"
+                else:
+                    string += str(self.mat[i][y])
+            if i + 1 < len(self.mat):
+                string += '\n'
+        return string
+    
+    def float_display(self):
+        string = ""
+        for i in range(len(self.mat)):
+            for y in range(len(self.mat[i])):
+                if y + 1 < len(self.mat[i]):
+                    nb = round(self.mat[i][y], 3)
+                    if nb == -0.0:
+                        nb = 0.0
+                    string += str(nb) + "\t"
+                else:
+                    nb = round(self.mat[i][y], 3)
+                    if nb == -0.0:
+                        nb = 0.0
+                    string += str(nb)
+            if i + 1 < len(self.mat):
+                string += '\n'
+        print(string)
+
+
+def matrice_with_size(word, size):
+    temp = []
+    for i in range(ceil(len(word) / size)):
+        temp.append([])
+        for y in range(size):
+            if i * size + y >= len(word):
+                temp[i].append(0)
+            else:
+                temp[i].append(ord(word[i * size + y]))
+    return temp
+
+def matrice_with_size_dec(word, size):
+    temp = []
+    numbers_list = word.split()
+    numbers_array = [int(number) for number in numbers_list]
+    index = 0
+    for i in range(ceil(len(word) / size)):
+        temp.append([])
+        for y in range(size):
+            if i * size + y >= len(numbers_array):
+                temp[i].append(0)
+            else:
+                temp[i].append(numbers_array[index])
+                index += 1
+    return temp
+
+def inverse_1x1(matrix):
+    a = matrix[0][0]
+    if a == 0:
+        sys.exit(84)
+    return [[1 / a]]
+
+def inverse_2x2(matrix):
+    a, b, c, d = matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]
+    det = a * d - b * c
+    if det == 0:
+        sys.exit(84)
+    return [[d / det, -b / det], [-c / det, a / det]]
+
+
+def inverse_3x3(matrix):
+    a, b, c = matrix[0][0], matrix[0][1], matrix[0][2]
+    d, e, f = matrix[1][0], matrix[1][1], matrix[1][2]
+    g, h, i = matrix[2][0], matrix[2][1], matrix[2][2]
+    det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
+    if det == 0:
+        sys.exit(84)
+    return [[(e * i - f * h) / det, (c * h - b * i) / det, (b * f - c * e) / det],
+            [(f * g - d * i) / det, (a * i - c * g) / det, (c * d - a * f) / det],
+            [(d * h - e * g) / det, (b * g - a * h) / det, (a * e - b * d) / det]]
+
+def multiply(m1, m2, i, t):
+    result = 0
+
+    for w in range(m2.size):
+        result += m1[i][w] * m2.mat[w][t]
+    return result
+
+def multiply_matrice(m1, m2):
+    m_result = []
+    for i in range(len(m1)):
+        m_result.append([])
+    for t in range(len(m2.mat[0])):
+        for t in range(len(m_result)):
+            m_result[t].append([])
+    for i in range(len(m_result)):
+        for t in range(len(m_result[i])):
+            m_result[i][t] = multiply(m1, m2, i, t)
+    return m_result
+
+def display_result(m_result):
+    for i in range(len(m_result)):
+        for y in range(len(m_result[i])):
+            if i + 1 >= len(m_result) and y + 1 >= len(m_result[i]):
+                print(m_result[i][y], end = '\n')
+            else:
+                print(m_result[i][y], end = " ")
+
+def display_decrypted(m_result):
+    for i in range(len(m_result)):
+        for y in range(len(m_result[i])):
+            if i + 1 >= len(m_result) and y + 1 >= len(m_result[i]):
+                print(chr(round(m_result[i][y])), end = '\n')
+            else:
+                print(chr(round(m_result[i][y])), end = "")
+
+def cipher():
+    if len(sys.argv) != 4:
+        sys.exit(84)
+    if int(sys.argv[3]) == 0:
+        print("Key matrix:")
+        key = matrice(sys.argv[2])
+        print(key)
+        word = matrice_with_size(sys.argv[1], key.size)
+        print("\nEncrypted message:")
+        result = multiply_matrice(word, key)
+        display_result(result)
+        sys.exit(0)
+    if int(sys.argv[3]) == 1:
+        key = matrice(sys.argv[2])
+        if key.size == 1:
+            key.mat = inverse_1x1(key.mat)
+        if key.size == 2:
+            key.mat = inverse_2x2(key.mat)
+        if key.size == 3:
+            key.mat = inverse_3x3(key.mat)
+        print("Key matrix:")
+        key.float_display()
+        word = matrice_with_size_dec(sys.argv[1], key.size)
+        print("\nDecrypted message:")
+        result = multiply_matrice(word, key)
+        display_decrypted(result)
+        sys.exit(0)
+    sys.exit(84)
+
+if __name__ == "__main__":
+    cipher()

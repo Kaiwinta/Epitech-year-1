@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2024
+## B-MAT-100-STG-1-1-105demography-titouan.pradoura
+## File description:
+## 105demography
+##
+
+import math, sys
+import parse, calcul
+
+def is_real_country(contries, country):
+    if (country in contries):
+        return True
+    return False
+
+def print_countries(countries):
+    print("Country: ", end='')
+    print(', '.join(countries))
+
+def print_fit1(ax, bx, rms, pop):
+    print("Fit1")
+    sign = '+'
+    if bx < 0 :
+        sign = '-'
+        bx = bx * (-1)
+    print(f"    Y = {ax:.2f} X {sign} {bx:.2f}")
+    print(f"    Root-mean-square deviation: {rms:.2f}")
+    print(f"    Population in 2050: {pop:.2f}")
+
+def print_fit2(ay, by, rms, pop):
+    print("Fit2")
+    sign = '+'
+    if by < 0 :
+        sign = '-'
+        by = by * (-1)
+    print(f"    X = {ay:.2f} Y {sign} {by:.2f}")
+    print(f"    Root-mean-square deviation: {rms:.2f}")
+    print(f"    Population in 2050: {pop:.2f}")
+
+def help():
+    print("USAGE")
+    print("\t./105demography [code]+")
+    print("DESCRIPTION")
+    print("\tcode country code")
+
+def main():
+    if (len(sys.argv) == 1):
+        sys.exit(84)
+
+    if (sys.argv[1] == "-h"):
+        if (len(sys.argv) == 2):
+            help()
+            sys.exit(0)
+        else:
+            sys.exit(84)
+    input = parse.check_country(sys.argv[1:])
+    ax, bx, rmsd_Y, ay, by, rmsd_X, correlation = calcul.linear_least_squares_regression(input[1], input[2])
+    print_countries(input[0])
+    print_fit1(ax / 1000000, bx / 1000000, rmsd_Y / 1000000,  (ax * 2050 + bx) / 1000000)
+    ax, bx, rmsd_Y, ay, by, rmsd_X, correlation = calcul.linear_least_squares_regression(input[2], input[1])
+    print_fit2(ax * 1000000 , bx , rmsd_X / 1000000,  (ay * 2050 + by) / 1000000)
+    print(f"Correlation: {correlation:.4f}")
+
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

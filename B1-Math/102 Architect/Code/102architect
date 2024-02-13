@@ -1,0 +1,171 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2023
+## bs_archi
+## File description:
+## Untitled-1
+##
+
+from math import *
+import sys
+
+class matrice:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.z = 1.0
+
+    def __str__(self):
+        x = f"{self.x:.2f}"
+        if x == "-0.00":
+            x = "0.00"
+        y = f"{self.y:.2f}"
+        if y == "-0.00":
+            y = "0.00"
+        return f"({x}, {y})"
+    
+    def multiply(self, mat3):
+        savex= (self.x * mat3.x[0] + self.y * mat3.x[1] + self.z * mat3.x[2])
+        self.y = (self.x * mat3.y[0] + self.y * mat3.y[1] + self.z * mat3.y[2])
+        self.x = savex
+
+class matrice_3:
+    def __init__(self, calcul, param1, param2):
+        param1 = float(param1)
+        param2 = float(param2)
+        self.x = [1.00, 0.00, 0.00]
+        self.y = [0.00, 1.00, 0.00]
+        self.z = [0.00, 0.00, 1.00]
+        if calcul == '-t':
+            self.x[2] = param1
+            self.y[2] = param2
+        if calcul == '-z':
+            self.x[0] = param1
+            self.y[1] = param2
+        if calcul == '-r':
+            param1 = radians(param1)
+            costemp = cos(param1)
+            sintemp = sin(param1)
+            self.x = [costemp, -sintemp, 0]
+            self.y = [sintemp, costemp, 0]
+        if calcul == '-s':
+            param1 = radians(param1)
+            costemp = cos(2 * param1)
+            sintemp = sin(2 * param1)
+            self.x = [costemp, sintemp, 0]
+            self.y = [sintemp, -costemp, 0]
+
+    def display(self):
+        x = [round(self.x[0],2), round(self.x[1],2), round(self.x[2], 2)]
+        y = [round(self.y[0],2), round(self.y[1],2), round(self.y[2], 2)]
+        z = [round(self.z[0],2), round(self.z[1],2), round(self.z[2], 2)]
+        for i in range(3):
+            if x[i] == -0.0:
+                x[i] = 0.0
+            if y[i] == -0.0:
+                y[i] = 0.0
+            if z[i] == -0.0:
+                z[i] = 0.0
+        print(f"{x[0]:.2f}  {x[1]:.2f}  {x[2]:.2f}")
+        print(f"{y[0]:.2f}  {y[1]:.2f}  {y[2]:.2f}")
+        print(f"{z[0]:.2f}  {z[1]:.2f}  {z[2]:.2f}")
+
+    def multiply(self, matrice_second):
+        mattresult = matrice_3('.', 0, 0)
+        mattresult.x[0] = matrice_second.x[0] * self.x[0] + matrice_second.x[1] * self.y[0] + matrice_second.x[2] * self.z[0]
+        mattresult.x[1] = matrice_second.x[0] * self.x[1] + matrice_second.x[1] * self.y[1] + matrice_second.x[2] * self.z[1]
+        mattresult.x[2] = matrice_second.x[0] * self.x[2] + matrice_second.x[1] * self.y[2] + matrice_second.x[2] * self.z[2]
+        mattresult.y[0] = matrice_second.y[0] * self.x[0] + matrice_second.y[1] * self.y[0] + matrice_second.y[2] * self.z[0]
+        mattresult.y[1] = matrice_second.y[0] * self.x[1] + matrice_second.y[1] * self.y[1] + matrice_second.y[2] * self.z[1]
+        mattresult.y[2] = matrice_second.y[0] * self.x[2] + matrice_second.y[1] * self.y[2] + matrice_second.y[2] * self.z[2]
+        mattresult.z[0] = matrice_second.z[0] * self.x[0] + matrice_second.z[1] * self.y[0] + matrice_second.z[2] * self.z[0]
+        mattresult.z[1] = matrice_second.z[0] * self.x[1] + matrice_second.z[1] * self.y[1] + matrice_second.z[2] * self.z[1]
+        mattresult.z[2] = matrice_second.z[0] * self.x[2] + matrice_second.z[1] * self.y[2] + matrice_second.z[2] * self.z[2]
+        self.x = mattresult.x
+        self.y = mattresult.y
+        self.z = mattresult.z
+
+def check_next(i, nb_check, list_element):
+    for y in range(1, nb_check + 1):
+        try:
+            float(list_element[i + y])
+        except:
+            sys.exit(84)
+
+def call_function(i, nb_param, list_element):
+    if list_element[i] == '-t':
+        print(f"Translation along vector ({list_element[i + 1]}, {list_element[i + 2]})")
+    if list_element[i] == '-z':
+        print(f"Scaling by factors {list_element[i + 1]} and {list_element[i + 2]}")
+    if list_element[i] == '-r':
+        print(f"Rotation by a {list_element[i + 1]} degree angle")
+    if list_element[i] == '-s':
+        print(f"Reflection over an axis with an inclination angle of {list_element[i + 1]} degrees")
+    if nb_param == 1:
+        mat = matrice_3(list_element[i], list_element[i + 1], 0)
+    if nb_param == 2:
+        mat = matrice_3(list_element[i], list_element[i + 1], list_element[i + 2])
+    return mat
+
+def display_help():
+    print("USAGE")
+    print("    ./102architect x y transfo1 arg11 [arg12] [transfo2 arg21 [arg22]] ...")
+    print("")
+    print("DESCRIPTION")
+    print("    x   abscissa of the original point")
+    print("    y   ordinate of the original point")
+    print("")
+    print("    transfo arg1 [arg2]")
+    print("    -t i j  translation along vector (i, j)")
+    print("    -z m n  scaling by factors m (x-axis) and n (y-axis)")
+    print("    -r d    rotation centered in O by a d degree angle")
+    print("    -s d    reflection over the axis passing through O with an inclination")
+    print("            angle of d degrees")
+
+def architect():
+    try :
+        if sys.argv[1] == "-h":
+            display_help()
+            sys.exit(0)
+    except:
+        sys.exit(84)
+    if (len(sys.argv) < 5):
+        sys.exit(84);
+    try:
+        mat = matrice(float(sys.argv[1]), float(sys.argv[2]))
+    except:
+        sys.exit(84);
+    matcalcul = matrice_3('.',0 ,0)
+    list_flag = ["-t", "-z"]
+    list_flag2 = ["-s", "-r"]
+    i = 3
+    while i < len(sys.argv):
+        if sys.argv[i] in list_flag:
+            check_next(i, 2, sys.argv)
+            i += 3
+        elif sys.argv[i] in list_flag2:
+            check_next(i, 1, sys.argv)
+            i += 2
+        else:
+            sys.exit(84)
+    i = 3;
+    while i < len(sys.argv):
+        if sys.argv[i] in list_flag:
+            check_next(i, 2, sys.argv)
+            matcalcul.multiply(call_function(i, 2, sys.argv))
+            i += 3
+        elif sys.argv[i] in list_flag2:
+            check_next(i, 1, sys.argv)
+            matcalcul.multiply(call_function(i, 1, sys.argv))
+            i += 2
+        else:       
+            sys.exit(84)
+
+    matcalcul.display()
+    print(f"{mat} => ",end= '')
+    mat.multiply(matcalcul)
+    print(mat)
+    sys.exit(0)
+
+if __name__ == "__main__":
+    architect()

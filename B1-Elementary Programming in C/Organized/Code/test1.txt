@@ -1,0 +1,5 @@
+add WIRE test1, WIRE test2, SENSOR test7, WIRE test3, WIRE test4, WIRE test5, SENSOR test3
+disp
+sort ID
+disp
+exit

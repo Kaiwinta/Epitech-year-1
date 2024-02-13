@@ -1,0 +1,105 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2023
+## bs_pong
+## File description:
+## main.py
+##
+
+import math
+import sys
+
+class ball:
+    def __init__(self, x, y, z):
+        x = float(x)
+        y = float(y)
+        z = float(z)
+        self.x = x
+        self.y = y
+        self.z = z
+    
+    def __str__(self):
+        string = "(" + "{:.2f}".format(self.x) + ", " + "{:.2f}".format(self.y) + ", " + "{:.2f}".format(self.z) + ")"
+        return string
+
+    def move(self, vec):
+        self.x = self.x + vec.x
+        self.y = self.y + vec.y
+        self.z = self.z + vec.z
+
+
+class vector:
+    def __init__(self, ball_before, ball_start):
+        self.x = ball_start.x - ball_before.x
+        self.y = ball_start.y - ball_before.y
+        self.z = ball_start.z - ball_before.z
+
+    def __str__(self):
+        string = "(" + "{:.2f}".format(self.x) + ", " + "{:.2f}".format(self.y) + ", " + "{:.2f}".format(self.z) + ")"
+        return string
+
+    def mul_coef(self, coef):
+        self.x = self.x * coef
+        self.y = self.y * coef
+        self.z = self.z * coef
+
+    def update(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+    
+    def norm(self):
+        return (math.sqrt(self.x ** 2 + self.y ** 2 + self.z **2))
+
+def check_colission(ball_start, z, collided):
+    if (ball_start.z <= 0 and z > 0 and collided == 0):
+        return 1
+    if (ball_start.z >= 0 and z < 0 and collided == 0):
+        return 1
+    return 0
+
+def move_ball(ball_start, velocity, n):
+    temp = ball_start.z
+    collided = 0
+    for i in range(int(n)):
+        ball_start.move(velocity)
+        collided += check_colission(ball_start, temp, collided)
+    print(f"At time t + {n}, ball coordinates will be:")
+    print(ball_start)
+    if collided != 0:
+        print("The incidence angle is:")
+        rad = math.acos(velocity.z / velocity.norm())
+        if math.degrees(rad) > 90:
+            deg = math.degrees(rad) % 90
+        else:
+            deg = math.degrees(rad)
+        if deg == 0 or not deg:
+            print("0.00 degrees")
+        else:
+            print(f"{deg:.2f} degrees")
+    else:
+        print("The ball won't reach the paddle.")
+    
+def pong101():
+    if len(sys.argv) != 8:
+        sys.exit(84)
+    for i in range(1, 7):
+        try :
+            a = float(sys.argv[i])
+        except:
+            sys.exit(84)
+    try:
+        if int(sys.argv[7]) < 0:
+            sys.exit(84)
+    except:
+        sys.exit(84)
+    ball_before = ball(sys.argv[1], sys.argv[2], sys.argv[3])
+    ball_start = ball(sys.argv[4], sys.argv[5], sys.argv[6])
+    velocity = vector(ball_before, ball_start)
+    print("The velocity vector of the ball is:")
+    print(velocity)
+    move_ball(ball_start, velocity, sys.argv[7])
+    sys.exit(0)
+
+if __name__ == "__main__":
+    pong101()

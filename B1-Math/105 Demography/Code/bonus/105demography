@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2024
+## B-MAT-100-STG-1-1-105demography-titouan.pradoura
+## File description:
+## 105demography
+##
+
+import page_main as pm
+
+if __name__ == "__main__":
+    pm.main()
