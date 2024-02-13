@@ -1,0 +1,28 @@
+
+#!/usr/bin/env python3
+## EPITECH PROJECT, 2023
+## B-PSU-100-STG-1-1-navy-titouan.pradoura
+## File description:
+## main.py
+##
+
+import subprocess
+
+def navy():
+    make_process = subprocess.Popen("make re", shell=True, executable="/bin/bash", stdout=subprocess.PIPE, text=True)
+    make_output, _ = make_process.communicate()
+    print("Make Output:\n", make_output)
+
+    navy_process = subprocess.Popen("./my_navy positions/pos1", shell=True, executable="/bin/bash", 
+                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1, universal_newlines=True)
+
+    for line in navy_process.stdout:
+        print("Navy Output:", line.strip())
+        if line.strip() == 'attack:':
+            print("My turn")
+            input_data = "B1\n"
+            navy_process.stdin.write(input_data)
+            navy_process.stdin.flush()
+
+if __name__ == "__main__":
+    navy()
