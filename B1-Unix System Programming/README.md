@@ -7,6 +7,7 @@ This repository contains the projects completed during the PSU module at Epitech
 - [My_ls](#my_ls)
 - [My_sokoban](#my_sokoban)
 - [Navy](#navy)
+- [Grade](#grade)
 
 ### My_ls
 
@@ -20,3 +21,10 @@ The "My_sokoban" project is a Sokoban game implemented using the ncurses library
 
 The "Navy" project involves creating a battleship-like game that can be played between two terminals using signals for communication. Players take turns firing missiles at each other's grids to sink the opponent's ships. The game utilizes signal handling and inter-process communication techniques to facilitate gameplay between two terminals.
 
+### Grade
+
+My_ls: 73.7 %
+my_sokoban: 94.4%
+my_navy: 86%
+
+Grade: A
