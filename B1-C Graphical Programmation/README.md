@@ -6,6 +6,7 @@ This repository contains the projects completed during the Graphical Programming
 
 - [My_hunter](#my_hunter)
 - [My_radar](#my_radar)
+- [Grade](#grade)
 
 ### My_hunter
 
@@ -14,3 +15,7 @@ The "My_hunter" project is a Duck Hunt-like game implemented using the CSFML (Si
 ### My_radar
 
 The "My_radar" project involves creating a radar simulation using CSFML. The goal of this project is to handle collisions between thousands of aircraft flying in a simulated airspace. The project requires implementing efficient collision detection algorithms and graphical rendering techniques using CSFML to visualize the radar simulation. To access the README for this project, navigate to the directory `My_radar` and open the [README](My_radar/README.md) file.
+
+### Grade
+
+My Grade for this module was A medal
