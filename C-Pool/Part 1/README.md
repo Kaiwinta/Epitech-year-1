@@ -25,22 +25,41 @@ The "Rush" is a timed coding challenge that students often face during the C Poo
 ### Grade
 
 Day 01: 100%
+
 Day 02: 100%
+
 Day 03: 88.9%
+
 Day 04: 83.3%
+
 Day 05: 87.5%
+
 Day 06: 81%
+
 Day 07: 100%
+
 Day 08: 80%
+
 Day 09: 16.9% :(
+
 Day 10: 33.3%
+
 Day 11: 18.2%
+
 Day 12: No test passed.... But still a fun day
 
+---------------------------------------------
+
 Rush 1: 73.3%
+
 Rush 2: 75%
 
+---------------------------------------------
+
 Star: 100%
+
 Count_island: 100%
+
+---------------------------------------------
 
 Grade A medal
