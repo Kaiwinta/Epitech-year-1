@@ -19,8 +19,8 @@ A first semester Epitech project
 Welcome to the My_radar Project! This project aims to create an air traffic simulation using the CSFML library.
 
 <p align="center">
-  <img src="bin/screen/menu.png" alt="Alt Text" width="500"/>
-  <img src="bin/screen/simulation.png" alt="Alt Text" width="500"/>
+  <img src="Code/bin/screen/menu.png" alt="Alt Text" width="500"/>
+  <img src="Code/bin/screen/simulation.png" alt="Alt Text" width="500"/>
 </p>
 
 ## Features
