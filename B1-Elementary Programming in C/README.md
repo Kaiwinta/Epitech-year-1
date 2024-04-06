@@ -7,6 +7,7 @@ This repository contains the projects completed during the CPE (Common Projects 
 - [Setting Up](#setting-up)
 - [Organized](#organized)
 - [Secured](#secured)
+- [Grade](#grade)
 
 ### Setting Up
 
@@ -19,3 +20,11 @@ The "Organized" project focuses on implementing sorting algorithms on linked lis
 ### Secured
 
 The "Secured" project is designed to teach students about hash tables and their applications in security. In this project, students typically work in groups of two to implement a hash table data structure and use it to perform tasks related to security.
+
+### Grade
+
+Setting Up: 98.8%
+Organized: 89.7% 
+Secured: 100%
+
+Grade: A medal
