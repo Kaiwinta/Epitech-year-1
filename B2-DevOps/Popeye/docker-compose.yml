@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+  poll:
+    build:
+      context: ./poll
+    ports:
+      - "5000:80"
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - poll-tier
+    depends_on:
+      - redis
+    restart: on-failure
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    networks:
+      - poll-tier
+      - back-tier
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ./worker
+    depends_on:
+      - db
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=my_db
+      - POSTGRES_USER=kaiwinta
+      - POSTGRES_PASSWORD=bipboup
+    networks:
+      - back-tier
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=my_db
+      - POSTGRES_USER=kaiwinta
+      - POSTGRES_PASSWORD=bipboup
+    networks:
+      - result-tier
+      - back-tier
+    restart: unless-stopped
+
+  result:
+    build:
+      context: ./result
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - REDIS_HOST=redis
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=my_db
+      - POSTGRES_USER=kaiwinta
+      - POSTGRES_PASSWORD=bipboup
+    networks:
+      - result-tier
+    ports:
+      - "5001:80"
+    restart: unless-stopped
+
+networks:
+  poll-tier:
+  result-tier:
+  back-tier:
+
+volumes:
+  db-data:
