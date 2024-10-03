@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2023
+## 109borwein
+## File description:
+## 110borwein
+##
+
+import sys
+import compute
+
+def display_data(data : list, n : int) ->None:
+    print(data[0])
+    print(f"I{n} = {data[1]:.10f}")
+    print(f"diff = {data[2]:.10f}")
+
+def main() -> int:
+    if (len(sys.argv) != 2):
+        sys.exit(84)
+    try:
+        n = int(sys.argv[1])
+    except:
+        sys.exit(84)
+    if n > 5000 or n < 0:
+        sys.exit(84)
+    if (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
+        print("USAGE:\n\t./110borwein <data.csv>")
+        sys.exit(0)
+    midpoint = compute.compute_midpoint(n)
+    trapeze = compute.compute_trapeze(n)
+    simpson = compute.compute_simpson(n)
+    midpoint_data = compute.compute_dif(midpoint, 0)
+    trapeze_data = compute.compute_dif(trapeze, 1)    
+    simpson_data = compute.compute_dif(simpson, 2)
+    display_data(midpoint_data, n)
+    display_data(trapeze_data, n)
+    display_data(simpson_data, n)
+    sys.exit(0)    
+
+if __name__ == "__main__":
+    main()

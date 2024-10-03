@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2023
+## 106Bombyx
+## File description:
+## Untitled-1
+##
+
+import sys
+
+def compute_pop(nb_bombyx, rate, i0, i1):
+    liste_pop = []
+    for i in range(1, i1 + 1):
+        liste_pop.append([i, nb_bombyx, rate])
+        nb_bombyx = rate * nb_bombyx * ((1000 - nb_bombyx) / 1000)
+    return liste_pop[i0 - 1: i1]
+
+def compute_growth_rate(args):
+    try:
+        nb_bombyx = int(args[1])
+        rate = float(args[2])
+    except:
+        sys.exit(84)
+    if nb_bombyx < 0 or rate > 4 or rate < 1:
+        sys.exit(84)
+    nb_bombyx = float(nb_bombyx)
+    for i in compute_pop(nb_bombyx, rate, 1, 100):
+        if i[1] < 0:
+            i[1] = 0
+        print(f"{i[0]} {i[1]:.2f}")
+    sys.exit(0)
+
+def compute_by_border(args):
+    try:
+        nb_bombyx = int(args[1])
+        initial = int(args[2])
+        end = int(args[3])
+    except:
+        sys.exit(84)
+    if nb_bombyx < 0 or initial < 0 or end < 0 or end < initial:
+        sys.exit(84)
+    for rate in range(100, 401, 1):
+        result = compute_pop(nb_bombyx, rate / 100, initial, end)
+        for i in result:
+            if i[1] < 0:
+                i[1] = 0
+            print(f"{i[2]:.2f} {i[1]:.2f}")
+    sys.exit(0)
+
+def main():
+    if len(sys.argv) == 3:
+        compute_growth_rate(sys.argv)
+    if len(sys.argv) == 4:
+        compute_by_border(sys.argv)
+    sys.exit(84)
+    
+if __name__ == "__main__":
+    main()

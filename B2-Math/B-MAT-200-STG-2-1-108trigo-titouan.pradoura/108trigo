@@ -1,0 +1,165 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2023
+## B-MAT-200-STG-2-1-108trigo-titouan.pradoura
+## File description:
+## 108trigo
+##
+
+from __future__ import annotations
+import sys, math
+
+class matrice:
+
+    def __init__(self, size :int, list_args :list[int]):
+        self.size = size
+        self.mat = []
+        self.init_mat(list_args)
+    
+    def __str__(self):
+        result = ""
+        for i in range(self.size):
+            result += '\t'.join(f"{x:.2f}" for x in self.mat[i])
+            if (i + 1 < self.size):
+                result += '\n'
+        return result;
+
+    def copy(self) ->matrice:
+        new_data = [elem for row in self.mat for elem in row]
+        return matrice(self.size, new_data)
+
+    def init_mat(self, list_args :list[int]):
+        for y in range(self.size):
+            self.mat.append([])
+            for x in range(self.size):
+                self.mat[y].append(list_args[y * self.size + x])
+    
+
+    def add(self, mat2):
+        temp = [[0] * self.size for i in range(self.size)]
+        for i in range(self.size):
+            for j in range(self.size):
+                temp[i][j] = self.mat[i][j] + mat2.mat[i][j]
+        self.mat = temp
+
+    def sub(self, mat2):
+        temp = [[0] * self.size for i in range(self.size)]
+        for i in range(self.size):
+            for j in range(self.size):
+                temp[i][j] = self.mat[i][j] - mat2.mat[i][j]
+        self.mat = temp
+
+    def mul(self, mat2) :
+        temp = [[0] * self.size for _ in range(self.size)]
+        for i in range(self.size):
+            for j in range(self.size):
+                for k in range(self.size):
+                    temp[i][j] += self.mat[i][k] * mat2.mat[k][j]
+        self.mat = temp
+
+
+    def div(self, deno :int) ->matrice:
+        for i in range(self.size):
+            for j in range(self.size):
+                self.mat[i][j] = self.mat[i][j] / deno
+        return self
+    
+    def pow(self, power :int) ->matrice:
+        data = [0] * (self.size ** 2)
+        identity = matrice(self.size, data)
+        for i in range(self.size):
+            identity.mat[i][i] = 1
+        for i in range(power):
+            identity.mul(self)
+        self.mat = identity.mat
+        return self
+    
+    def cos_mat(self) -> 'matrice':
+        switch = 0
+        data = [0] * (self.size ** 2)
+        temp = matrice(self.size, data)
+        for i in range(0, 100, 2):
+            copy_pow = self.copy().pow(i)
+            copy_div = copy_pow.copy().div(math.factorial(i))
+            if switch % 2:
+                temp.sub(copy_div)
+            else:
+                temp.add(copy_div)
+            switch += 1
+        self.mat = temp.mat
+
+    def sin_mat(self) -> 'matrice':
+        switch = 0
+        data = [0] * (self.size ** 2)
+        temp = matrice(self.size, data)
+        for i in range(1, 100, 2):
+            copy_pow = self.copy().pow(i)
+            copy_div = copy_pow.copy().div(math.factorial(i))
+            if switch % 2:
+                temp.sub(copy_div)
+            else:
+                temp.add(copy_div)
+            switch += 1
+        self.mat = temp.mat
+
+    def exp_mat(self):
+        data = [0] * (self.size ** 2)
+        identity = matrice(self.size, data)
+        for i in range(self.size):
+            identity.mat[i][i] = 1
+        for i in range(1, 100):
+            copy_pow = self.copy().pow(i)
+            copy_div = copy_pow.copy().div(math.factorial(i))
+            identity.add(copy_div)
+        self.mat = identity.mat
+
+    def cosh_mat(self):
+        data = [0] * (self.size ** 2)
+        temp = matrice(self.size, data)
+        for i in range(0, 100, 2):
+            copy_pow = self.copy().pow(i)
+            copy_div = copy_pow.copy().div(math.factorial(i))
+            temp.add(copy_div)
+        self.mat = temp.mat
+
+    def sinh_mat(self):
+        data = [0] * (self.size ** 2)
+        temp = matrice(self.size, data)
+        for i in range(1, 100, 2):
+            copy_pow = self.copy().pow(i)
+            copy_div = copy_pow.copy().div(math.factorial(i))
+            temp.add(copy_div)
+        self.mat = temp.mat
+
+
+def init_matrice(list_args: list[str]) -> matrice:
+    try:
+        list_args = [int(element) for element in list_args]
+    except:
+        sys.exit(84)
+    for i in range(int(math.sqrt(len(list_args))) + 1):
+        if i == math.sqrt(len(list_args)):
+            return matrice(i, list_args)
+    sys.exit(84)
+
+def trigo():
+    if (len(sys.argv) < 3):
+        print("Usage: ./108trigo fun a0 a1 a2 ...", file=sys.stderr)
+        sys.exit(84)
+    matrix = init_matrice(sys.argv[2:])
+    if sys.argv[1] == "SINH":
+        matrix.sinh_mat()
+    elif sys.argv[1] == "COSH":
+        matrix.cosh_mat()
+    elif sys.argv[1] == "EXP":
+        matrix.exp_mat()
+    elif sys.argv[1] == "COS":
+        matrix.cos_mat()
+    elif sys.argv[1] == "SIN":
+        matrix.sin_mat()
+    else:
+        sys.exit(84)
+    print(matrix)
+
+if __name__ == '__main__':
+    trigo()
