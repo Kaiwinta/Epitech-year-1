@@ -43,11 +43,11 @@ static void compute_speed(plane_t *plane, int speed)
 {
     float delta_x = plane->dest.x - plane->pos.x;
     float delta_y = plane->dest.y - plane->pos.y;
-    float theta = atan2(delta_y, delta_x);
+    float theta = atan2f(delta_y, delta_x);
 
-    plane->x_vel = speed * cos(theta);
-    plane->y_vel = speed * sin(theta);
-    plane->angle = atan2(plane->y_vel, plane->x_vel) * (180 / M_PI);
+    plane->x_vel = speed * cosf(theta);
+    plane->y_vel = speed * sinf(theta);
+    plane->angle = atan2f(plane->y_vel, plane->x_vel) * (180 / M_PI);
     sfSprite_setRotation(plane->sprite, plane->angle);
     plane->in_air = 0;
     plane->protected = 0;
